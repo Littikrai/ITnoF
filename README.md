@@ -1,6 +1,9 @@
 # ITnoF
 ## How to run this code
-
+python handcraft_based
+#learing
+python learning_based
+python test_learning_based
 ## How to Change Dataset
 ## Member
 
