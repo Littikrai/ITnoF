@@ -5,7 +5,7 @@ from tqdm import tqdm
 import torch
 
 # Load the Trained Model
-model = torch.load('./FKPStructure.pt')
+model = torch.load('./train_learning_base.pt')
 # Load Data File
 test = pd.read_csv('./dataset/Test/test.csv')
 # Load Output File

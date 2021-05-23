@@ -65,4 +65,4 @@ for epoch in tqdm(range(n_epochs)):
     tr_loss = loss_train.item()
 
 # Saving Model to this path
-torch.save(model, './FKPStructure.pt')
+torch.save(model, './train_learning_base.pt')
