@@ -1,6 +1,7 @@
 # ITnoF
 ## How to run handcraft
-
+Train & Test
+python handcraft_based
 ## How to run learning
 
 ## How to Change Dataset
