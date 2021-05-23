@@ -20,49 +20,40 @@ for img_name in tqdm(train['id']):
         img = img.astype('float32')
         img /= 255.0 #normalize to 0-1
         train_img.append(img)
-train_x = np.array(train_img)
-train_y = train['label'].values # expected output value
+train_data = np.array(train_img) # trainning data
+train_edata = train['label'].values # expected data
 
-# converting training images into torch format
-train_x = train_x.reshape(100, 1, 110, 220)
-train_x = torch.from_numpy(train_x).to(torch.float32)
-# converting the target into torch format
-train_y = train_y.astype(int)
-train_y = torch.from_numpy(train_y).to(torch.float32)
+# converting into torch format
+train_data = train_data.reshape(100, 1, 110, 220)
+train_data = torch.from_numpy(train_data).to(torch.float32)
+train_edata = train_edata.astype(int)
+train_edata = torch.from_numpy(train_edata).to(torch.float32)
 
-# defining the model
+# defining the model, optimizer, loss function
 model = FKPStructure()
-
-# defining the optimizer
 optimizer = SGD(model.parameters(), lr=0.03, momentum=0.9)
-
-# defining the loss function
 criterion = CrossEntropyLoss()
 
-#empty list to store training losses
-train_losses = []
-# defining the number of epochs
-n_epochs = 25
+train_losses = [] #list for store training losses
+n_epochs = 25 # defining the number of epochs
+
 # training the model
 for epoch in tqdm(range(n_epochs)):
     model.train()
     tr_loss = 0
-    # getting the training set
-    x_train, y_train = Variable(train_x), Variable(train_y)
+    data, edata = Variable(train_data), Variable(train_edata)  # getting the training set
+    optimizer.zero_grad()  # clearing the Gradients of the model parameters
+    output_train = model(data)
 
-    # clearing the Gradients of the model parameters
-    optimizer.zero_grad()
-    # prediction for training and validation set
-    output_train = model(x_train)
-
-    y_train = y_train.long() 
-    y_train = y_train.squeeze_()
-    loss_train = criterion(output_train, y_train)
+    edata = edata.long()
+    edata = edata.squeeze_()
+    loss_train = criterion(output_train, edata)
     train_losses.append(loss_train)
+    
     # computing the updated weights of all the model parameters
     loss_train.backward()
     optimizer.step()
     tr_loss = loss_train.item()
 
-# Saving Model to this path
+# Saving Model
 torch.save(model, './train_learning_base.pt')
