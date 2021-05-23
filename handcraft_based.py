@@ -17,7 +17,9 @@ for _classname in t.tqdm(range(1, 11)):
     for id in range(1, 11):
         path = ('./dataset/Train/'+str(_classname)+'/0'+ str(id)+'ROI.jpg')
         image = imread(path)
+        #resize Image
         re_image = resize(image, (64, 128))
+        # Feature Extraction
         fd = hog(re_image, orientations=8, pixels_per_cell=(8, 8), cells_per_block=(2, 2))
         featureTr.append(fd)
         labelTr.append(_classname)
@@ -31,11 +33,13 @@ outXls = pd.read_csv('./result/result_handcraft.csv')
 test_img = []
 pathName = []
 predictions = []
+# for test image
 for img_name in t.tqdm(test['id']):
     pathT = './dataset/Test/'+str(img_name)
     imgT = imread(pathT)
     pathName.append(str(img_name))
     re_imageT = resize(imgT, (64, 128))
+    # Feature Extraction
     featureTs = hog(re_imageT, orientations=8, pixels_per_cell=(8, 8), cells_per_block=(2, 2))
     featureTs = featureTs.reshape(1, -1)
     test_img.append(featureTs)
