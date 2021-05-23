@@ -1,12 +1,17 @@
 # ITnoF
+
 ## How to run handcraft based
+
 Train & Test
 > python handcraft_based
+
 ## How to run learning based
+
 Train Modal
 > python learning_based
 Test Modal
 > python test_learning_based
+
 ## How to Change Dataset
 
 ## Member
